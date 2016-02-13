@@ -61,7 +61,6 @@ public class ArvoreAVL {
                     aComparar.setDireita(aInserir);
                     aInserir.setPai(aComparar);
                     verificarBalanceamento(aComparar);
-
                 } else {
                     inserirNode(aComparar.getDireita(), aInserir);
                 }

@@ -1,5 +1,7 @@
 package projetoed2.com.br.estruturadedados;
 
+import java.util.LinkedList;
+
 import projetoed2.com.br.model.Contato;
 
 /**

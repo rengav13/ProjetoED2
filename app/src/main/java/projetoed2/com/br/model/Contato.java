@@ -13,6 +13,17 @@ public class Contato implements Comparable<Contato> {
     private int celular;
     private String email;
 
+    public Contato(){
+        super();
+    }
+    public Contato(int id,String nome,int telefone,int celular,String email){
+        this.id = id;
+        this.nome = nome;
+        this.telefone = telefone;
+        this.celular = celular;
+        this.email = email;
+    }
+
     public void setId(int id){
         this.id = id;
     }
@@ -53,5 +64,17 @@ public class Contato implements Comparable<Contato> {
         }else{
             return  0;
         }
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append(this.id+"\n");
+        builder.append(this.nome+"\n");
+        builder.append(telefone+"\n");
+        builder.append(this.celular+"\n");
+        builder.append(this.email+"\n");
+        builder.append("\n");
+        return builder.toString();
     }
 }
