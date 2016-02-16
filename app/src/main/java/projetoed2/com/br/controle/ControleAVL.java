@@ -48,7 +48,7 @@ public class ControleAVL {
 
     private String geraString(LinkedList<Contato> lista){
         //TODO implementar metodo de ordenação para ordenar a lista antes de gerar a String para escrever no arquivo
-        //ordenacao.shellSort(lista); O problema aqui é que o metodo shell recebe um vetor sendo que tem que receber uma lista
+        ordenacao.shellSort(lista); // O problema aqui é que o metodo shell recebe um vetor sendo que tem que receber uma lista
         StringBuilder builder = new StringBuilder();
         for(int i=0;i<lista.size();i++){
          Contato contato = lista.get(i);
