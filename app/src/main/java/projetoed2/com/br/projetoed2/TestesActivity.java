@@ -3,29 +3,22 @@ package projetoed2.com.br.projetoed2;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.LinkedList;
 
-import android.os.Environment;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import projetoed2.com.br.Service.ServiceContato;
 import projetoed2.com.br.arquivo.Arquivo;
-import projetoed2.com.br.controle.ControleAVL;
 import projetoed2.com.br.model.Contato;
 
 public class TestesActivity extends AppCompatActivity {
 
     private TextView txtSalvar;
     private TextView txtLer;
+    private ServiceContato serviceContato = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,32 +37,34 @@ public class TestesActivity extends AppCompatActivity {
     }
 
     public void click_Salvar(View v){
-        Arquivo arquivo = new Arquivo();
-        try {
-            arquivo.writeFile(txtSalvar.getText().toString());
-        } catch (IOException e) {
-            Mensagem("Erro : " + e.getMessage());
-        }
+
     }
 
-    public void click_Carregar(View v)  {
-        ControleAVL controleAVL = null;
+    public void click_Carregar(View v) {
         try {
-            controleAVL = new ControleAVL();
+            serviceContato = new ServiceContato();
         } catch (IOException e) {
             Mensagem("Falha ao abrir o arquivo");
         }
+        Contato contato = new Contato(" 12","2323","324","vagnerbas");
         try {
-            controleAVL.geraAVL();
+            serviceContato.removerContato(contato);
         } catch (IOException e) {
-            Mensagem("Falha ao abrir o arquivo");
+            Mensagem("Eror ao remover contato");
         }
-        String texto = txtSalvar.getText().toString();
-        int chave = Integer.parseInt(texto);
-        if(controleAVL.pesquisar(chave) == null){
-            txtLer.setText("Arquivo nao esta na arvore");
+
+        if(serviceContato.pesquisaContato(" 12") == null){
+            txtLer.setText("Arquivo nao esta na arvore 1");
         }else {
-            txtLer.setText(controleAVL.pesquisar(chave).toString());
+            txtLer.setText(serviceContato.getContatos().toString());
+        }
+        if(!serviceContato.getContatos().contains(contato)){
+            for(int i=0;i<serviceContato.getContatos().size();i++){
+                txtLer.append(serviceContato.getContatos().get(i).toString());
+            }
+            txtLer.setText("nao achou :"+serviceContato.getContatos().toString());
+        }else {
+            txtLer.setText(serviceContato.getContatos().toString());
         }
     }
 }

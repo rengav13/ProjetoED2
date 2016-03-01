@@ -10,10 +10,10 @@ public class Node {
     private Node direita;
     private Node pai;
     private Contato valor;
-    private int chave;
+    private String chave;
     private int balanceamento;
 
-    public Node(int chave,Contato valor) {
+    public Node(String chave,Contato valor) {
         this.setEsquerda(this.setDireita(this.setPai(null)));
         this.setBalanceamento(0);
         this.setChave(chave);
@@ -26,11 +26,11 @@ public class Node {
     public Contato getValor() {
         return valor;
     }
-    public int getChave() {
+    public String getChave() {
         return chave;
     }
 
-    public void setChave(int chave) {
+    public void setChave(String chave) {
         this.chave = chave;
     }
     public int getBalanceamento() {

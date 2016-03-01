@@ -18,17 +18,17 @@ public class ArvoreAVL {
         this.raiz = raiz;
     }
 
-    public Node buscarNode(int chave){
+    public Node buscarNode(String chave){
         return this.buscarNode(this.raiz,chave);
     }
 
-    private Node buscarNode(Node no, int chave) {
+    private Node buscarNode(Node no, String chave) {
         if (no == null) {
             return null;
         } else {
-            if (no.getChave() == chave) {
+            if (no.getChave().compareTo(chave) == 0) {
                 return no;
-            } else if (chave > no.getChave()) {
+            } else if (no.getChave().compareTo(chave) < 0) {
                 return buscarNode(no.getDireita(), chave);
             } else {
                 return buscarNode(no.getEsquerda(), chave);
@@ -37,7 +37,7 @@ public class ArvoreAVL {
     }
 
     public void inserirNode(Contato valor) {
-        Node n = new Node(valor.getId(),valor);
+        Node n = new Node(valor.getNome(),valor);
         this.inserirNode(this.raiz, n);
     }
 
@@ -45,7 +45,7 @@ public class ArvoreAVL {
         if (aComparar == null) {
             this.raiz = aInserir;
         } else {
-            if (aInserir.getChave() < aComparar.getChave()) {
+            if (aInserir.getChave().compareTo(aComparar.getChave()) < 0) {
                 if (aComparar.getEsquerda() == null) {
                     aComparar.setEsquerda(aInserir);
                     aInserir.setPai(aComparar);
@@ -55,7 +55,7 @@ public class ArvoreAVL {
                     inserirNode(aComparar.getEsquerda(), aInserir);
                 }
 
-            } else if (aInserir.getChave() > aComparar.getChave()) {
+            } else if (aInserir.getChave().compareTo(aComparar.getChave()) > 0) {
 
                 if (aComparar.getDireita() == null) {
                     aComparar.setDireita(aInserir);
@@ -191,19 +191,19 @@ public class ArvoreAVL {
         return rotacaoEsquerda(inicial);
     }
 
-    public void removerNode(int chave) {
+    public void removerNode(String chave) {
         this.removerNode(this.raiz, chave);
     }
 
-    private void removerNode(Node atual, int k) {
+    private void removerNode(Node atual, String k) {
         if (atual == null) {
             return;
         } else {
-            if (atual.getChave() > k) {
+            if (atual.getChave().compareTo(k) > 0) {
                 removerNode(atual.getEsquerda(), k);
-            } else if (atual.getChave() < k) {
+            } else if (atual.getChave().compareTo(k) < 0) {
                 removerNode(atual.getDireita(), k);
-            } else if (atual.getChave() == k) {
+            } else if (atual.getChave().compareTo(k) == 0) {
                 this.removerNoEncontrado(atual);
             }
         }

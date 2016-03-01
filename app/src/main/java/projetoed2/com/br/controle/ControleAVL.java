@@ -21,7 +21,23 @@ public class ControleAVL {
             this.geraAVL();
     }
 
-    public Contato pesquisar(int chave){
+    private void geraAVL() throws IOException {
+        LinkedList<Contato> listaContatos = this.geraContatos();
+
+        for(int i=0;i<listaContatos.size();i++){
+            contatosAVL.inserirNode(listaContatos.get(i));
+        }
+    }
+
+    /**
+     *
+     * Caso não encontre contato retorna null
+     *
+     * @param chave do tipo string
+     * @return Contato
+     *
+     */
+    public Contato pesquisar(String chave){
         if(contatosAVL.buscarNode(chave) == null){
             return null;
         }else{
@@ -33,48 +49,34 @@ public class ControleAVL {
         contatosAVL.inserirNode(contato);
     }
 
-    public void remover(int chave){
+    public void remover(String chave){
         contatosAVL.removerNode(chave);
     }
 
-    public void geraAVL() throws IOException {
-        LinkedList<String> listaContatosStr = this.read();
-        LinkedList<Contato> listaContatos = this.geraContatos(listaContatosStr);
-
-        for(int i=0;i<listaContatos.size();i++){
-            contatosAVL.inserirNode(listaContatos.get(i));
-        }
+    public LinkedList<Contato> geraContatos() throws IOException {
+        LinkedList<String> lista = this.read();
+        return this.geraContatos(lista);
     }
-
-    private String geraString(LinkedList<Contato> lista){
-        //TODO implementar metodo de ordenação para ordenar a lista antes de gerar a String para escrever no arquivo
-        ordenacao.shellSort(lista); // O problema aqui é que o metodo shell recebe um vetor sendo que tem que receber uma lista
-        StringBuilder builder = new StringBuilder();
-        for(int i=0;i<lista.size();i++){
-         Contato contato = lista.get(i);
-            String strContato = contato.toString();
-            builder.append(strContato);
-        }
-        return builder.toString();
+    private LinkedList<String> read() throws IOException {
+        return arquivo.readFile();
     }
 
     /*
      * Logica para decodificação dos dados no arquivo:
-     *  id --> Nome --> Telefone --> Celular --> email --> "\n"
+     *  Nome --> Telefone --> Celular --> email --> "\n"
      */
     private LinkedList<Contato> geraContatos(LinkedList<String> lista) {
-        int tamanho = lista.size()/6;
+        int tamanho = lista.size()/5;
         if(!lista.isEmpty()) {
             LinkedList<Contato> listaContatos = new LinkedList<>();
             for (int i = 0; i < tamanho; i++) {
-                String id = lista.get(6 * i);
-                String nome = lista.get(6 * i + 1);
-                String telefone = lista.get(6 * i + 2);
-                String celular = lista.get(6 * i + 3);
-                String email = lista.get(6 * i + 4);
-                // O lista.get(6*i+5) é um espaço que é desconsiderado
+                String nome = lista.get(5 * i);
+                String telefone = lista.get(5 * i + 1);
+                String celular = lista.get(5 * i + 2);
+                String email = lista.get(5 * i + 3);
+                // O lista.get(5*i+4) é um espaço que é desconsiderado
 
-                Contato contato = new Contato(stringToInt(id), nome, stringToInt(telefone), stringToInt(celular), email);
+                Contato contato = new Contato(nome,telefone, celular, email);
                 listaContatos.add(contato);
             }
             return listaContatos;
@@ -83,23 +85,23 @@ public class ControleAVL {
         }
     }
 
-    private int stringToInt(String palavra){
-        return Integer.parseInt(palavra);
-    }
-
-    public void write(String texto) throws IOException {
+    public void write(LinkedList<Contato> contatos) throws IOException {
+        String texto = this.geraString(contatos);
         arquivo.writeFile(texto);
     }
 
-    public LinkedList<String> read() throws IOException {
-        return arquivo.readFile();
+    private String geraString(LinkedList<Contato> lista){
+        ordenacao.shellSort(lista);
+        StringBuilder builder = new StringBuilder();
+        for(int i=0;i<lista.size();i++){
+            Contato contato = lista.get(i);
+            String strContato = contato.toString();
+            builder.append(strContato);
+        }
+        return builder.toString();
     }
 
     public ArvoreAVL getContatosAVL() {
         return contatosAVL;
-    }
-
-    public void setContatosAVL(ArvoreAVL contatosAVL) {
-        this.contatosAVL = contatosAVL;
     }
 }

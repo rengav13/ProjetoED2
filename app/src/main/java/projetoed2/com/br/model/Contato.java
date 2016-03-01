@@ -7,45 +7,38 @@ import java.util.Comparator;
  */
 public class Contato implements Comparable<Contato> {
 
-    private int id;
     private String nome;
-    private int telefone;
-    private int celular;
+    private String telefone;
+    private String celular;
     private String email;
 
     public Contato(){
         super();
     }
-    public Contato(int id,String nome,int telefone,int celular,String email){
-        this.id = id;
+
+    public Contato(String nome,String telefone,String celular,String email){
         this.nome = nome;
         this.telefone = telefone;
         this.celular = celular;
         this.email = email;
     }
 
-    public void setId(int id){
-        this.id = id;
-    }
-    public int getId(){
-        return this.id;
-    }
     public void setNome(String nome){
         this.nome = nome;
     }
     public String getNome(){
         return this.nome;
     }
-    public void setTelefone(int telefone){
+    public void setTelefone(String telefone){
         this.telefone = telefone;
     }
-    public int getTelefone(){
+    public String getTelefone(){
         return this.telefone;
     }
-    public void setCelular(int celular){
+    public void setCelular(String celular){
         this.celular = celular;
     }
-    public int getCelular() {
+    public String getCelular() {
         return this.celular;
     }
     public void setEmail(String email) {
@@ -57,21 +50,14 @@ public class Contato implements Comparable<Contato> {
 
     @Override
     public int compareTo(Contato another) {
-        if(this.nome.compareTo(another.getNome()) == -1){
-            return -1;
-        }else if(this.nome.compareTo(another.getNome()) == 1){
-            return 1;
-        }else{
-            return  0;
-        }
+       return this.nome.compareTo(another.getNome());
     }
 
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        builder.append(this.id+"\n");
         builder.append(this.nome+"\n");
-        builder.append(telefone+"\n");
+        builder.append(this.telefone+"\n");
         builder.append(this.celular+"\n");
         builder.append(this.email+"\n");
         builder.append("\n");

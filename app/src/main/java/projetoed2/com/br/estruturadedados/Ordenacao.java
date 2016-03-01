@@ -21,7 +21,7 @@ public class Ordenacao {
         while(h>0){
             for(int i=0; i<v.size();i++){
                 for(int j = h;j<v.size();j++){
-                    if(v.get(j-h).compareTo(v.get(j)) == 1){
+                    if(v.get(j-h).compareTo(v.get(j)) > 0){
                         aux = v.get(j-h);
                         v.remove(j-h);
                         v.add(j-h,v.get(j-1));
