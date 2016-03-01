@@ -5,19 +5,19 @@ import android.os.Bundle;
 
 import java.io.IOException;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import projetoed2.com.br.Service.ServiceContato;
-import projetoed2.com.br.arquivo.Arquivo;
+import projetoed2.com.br.controle.ControleAVL;
 import projetoed2.com.br.model.Contato;
 
 public class TestesActivity extends AppCompatActivity {
 
     private TextView txtSalvar;
     private TextView txtLer;
-    private ServiceContato serviceContato = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,36 +36,24 @@ public class TestesActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
     }
 
-    public void click_Salvar(View v){
-
-    }
-
     public void click_Carregar(View v) {
+        ServiceContato serviceContato = null;
         try {
             serviceContato = new ServiceContato();
         } catch (IOException e) {
-            Mensagem("Falha ao abrir o arquivo");
+            e.printStackTrace();
         }
-        Contato contato = new Contato(" 12","2323","324","vagnerbas");
-        try {
-            serviceContato.removerContato(contato);
-        } catch (IOException e) {
-            Mensagem("Eror ao remover contato");
-        }
+        Contato contato = new Contato(txtSalvar.getText().toString(),"123","123",txtSalvar.getText().toString()+"@gmail.com");
 
-        if(serviceContato.pesquisaContato(" 12") == null){
-            txtLer.setText("Arquivo nao esta na arvore 1");
-        }else {
-            txtLer.setText(serviceContato.getContatos().toString());
+        try {
+            serviceContato.addContato(contato);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        if(!serviceContato.getContatos().contains(contato)){
-            for(int i=0;i<serviceContato.getContatos().size();i++){
-                txtLer.append(serviceContato.getContatos().get(i).toString());
-            }
-            txtLer.setText("nao achou :"+serviceContato.getContatos().toString());
-        }else {
-            txtLer.setText(serviceContato.getContatos().toString());
-        }
+        txtLer.setText("pesquisar:? ");
+        txtLer.append("\n Arvore \n" + serviceContato.getControleAVL().getContatosAVL().getRaiz().toString());
+        txtLer.append(" \n Lista \n" + serviceContato.getContatos().toString().toString());
+
     }
 }
 

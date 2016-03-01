@@ -1,10 +1,11 @@
 package projetoed2.com.br.Service;
 
+import android.util.Log;
+
 import java.io.IOException;
 import java.util.LinkedList;
 
 import projetoed2.com.br.controle.ControleAVL;
-import projetoed2.com.br.estruturadedados.Ordenacao;
 import projetoed2.com.br.model.Contato;
 
 /**
@@ -42,10 +43,20 @@ public class ServiceContato {
        }
     }
 
-    public void removerContato(Contato contato) throws IOException {
-        contatos.remove(contato);
-        controleAVL.remover(contato.getNome());
+    public void removerContato(String nome) throws IOException {
+        if(this.buscaLista(nome)!= -1){
+            this.contatos.remove(this.buscaLista(nome));
+        }
+        controleAVL.remover(nome);
         controleAVL.write(contatos);
+    }
+    private int buscaLista(String nome){
+        for(int i=0;i< this.contatos.size();i++){
+            if(this.contatos.get(i).getNome().equals(nome)){
+                return i;
+            }
+        }
+        return -1;
     }
 
     /** Tive que fazer uma gambiarra aqui pois nosso id é o nome e mudando o nome ele continuaria deixando armazenado o valor antigo
@@ -55,6 +66,7 @@ public class ServiceContato {
      * @param novoContato
      * @throws IOException
      */
+    //testando
     public void updateContato(Contato contatoAnterior, Contato novoContato) throws IOException {
         controleAVL.remover(contatoAnterior.getNome());
         controleAVL.insere(novoContato);

@@ -1,5 +1,7 @@
 package projetoed2.com.br.controle;
 
+import android.util.Log;
+
 import java.io.IOException;
 import java.util.LinkedList;
 
@@ -55,7 +57,7 @@ public class ControleAVL {
 
     public LinkedList<Contato> geraContatos() throws IOException {
         LinkedList<String> lista = this.read();
-        return this.geraContatos(lista);
+       return this.geraContatos(lista);
     }
     private LinkedList<String> read() throws IOException {
         return arquivo.readFile();
